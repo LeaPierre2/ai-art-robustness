@@ -1,0 +1,4 @@
+dhash_distance,image_id_a,split_a,source_a,path_a,image_id_b,split_b,source_b,path_b
+3,img_000486,train,Latent Diffusion,train/AI_LD_art_nouveau/0-727128773-470965.jpg,img_004123,validation,Latent Diffusion,train/AI_LD_renaissance/6-392125570-725692.jpg
+3,img_001165,test,Latent Diffusion,test/AI_LD_baroque/1-176121581-240691.jpg,img_003912,train,Latent Diffusion,train/AI_LD_renaissance/6-544840302-991178.jpg
+3,img_003340,train,Latent Diffusion,train/AI_LD_realism/5-758119666-494503.jpg,img_004123,validation,Latent Diffusion,train/AI_LD_renaissance/6-392125570-725692.jpg

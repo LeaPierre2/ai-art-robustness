@@ -1,0 +1,7 @@
+resolution_px,metric,n_seeds,mean_pp,min_pp,max_pp,sign_changes,signs_seed_42_43_44,interpretation
+128,gain_detection_pp,3,2.500000000000002,-3.8333333333333286,7.666666666666671,True,positive/positive/negative,descriptive_same_test_images
+128,attenuation_loss_pp,3,2.2777777777777786,0.8333333333333286,3.833333333333343,False,positive/positive/positive,descriptive_same_test_images
+128,difference_fpr_pp,3,-0.6111111111111112,-1.0,-0.3333333333333339,False,negative/negative/negative,descriptive_same_test_images
+64,gain_detection_pp,3,1.6666666666666667,-3.8333333333333286,5.666666666666664,True,positive/positive/negative,descriptive_same_test_images
+64,attenuation_loss_pp,3,1.4444444444444429,0.8333333333333286,1.8333333333333357,False,positive/positive/positive,descriptive_same_test_images
+64,difference_fpr_pp,3,-0.7777777777777773,-1.1666666666666665,-0.3333333333333326,False,negative/negative/negative,descriptive_same_test_images

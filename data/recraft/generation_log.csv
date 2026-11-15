@@ -1,0 +1,21 @@
+filename,style,prompt,model,requested_size,generated_at_utc
+01_art_nouveau_01.png,art_nouveau,Art Nouveau poster illustration of a woman holding lilies beneath an ornate floral arch,recraftv4_1_flash_v2,1024x1024,2026-11-14T22:25:59.996197+00:00
+01_art_nouveau_02.png,art_nouveau,Art Nouveau poster illustration of a woman holding lilies beneath an ornate floral arch,recraftv4_1_flash_v2,1024x1024,2026-11-14T22:25:59.996197+00:00
+02_baroque_01.png,baroque,"Baroque oil painting of a still life with a silver bowl, grapes, and a candle",recraftv4_1_flash_v2,1024x1024,2026-11-14T22:26:02.519759+00:00
+02_baroque_02.png,baroque,"Baroque oil painting of a still life with a silver bowl, grapes, and a candle",recraftv4_1_flash_v2,1024x1024,2026-11-14T22:26:02.519759+00:00
+03_expressionism_01.png,expressionism,Expressionist painting of a crowded city street at dusk,recraftv4_1_flash_v2,1024x1024,2026-11-14T22:26:05.344722+00:00
+03_expressionism_02.png,expressionism,Expressionist painting of a crowded city street at dusk,recraftv4_1_flash_v2,1024x1024,2026-11-14T22:26:05.344722+00:00
+04_impressionism_01.png,impressionism,Impressionist oil painting of people walking beside a river in spring,recraftv4_1_flash_v2,1024x1024,2026-11-14T22:26:08.308855+00:00
+04_impressionism_02.png,impressionism,Impressionist oil painting of people walking beside a river in spring,recraftv4_1_flash_v2,1024x1024,2026-11-14T22:26:08.308855+00:00
+05_post_impressionism_01.png,post_impressionism,Post-Impressionist painting of a hillside village with cypress trees,recraftv4_1_flash_v2,1024x1024,2026-11-14T22:26:11.246579+00:00
+05_post_impressionism_02.png,post_impressionism,Post-Impressionist painting of a hillside village with cypress trees,recraftv4_1_flash_v2,1024x1024,2026-11-14T22:26:11.246579+00:00
+06_realism_01.png,realism,Realist oil painting of a tailor working beside a window,recraftv4_1_flash_v2,1024x1024,2026-11-14T22:26:14.121858+00:00
+06_realism_02.png,realism,Realist oil painting of a tailor working beside a window,recraftv4_1_flash_v2,1024x1024,2026-11-14T22:26:14.121858+00:00
+07_renaissance_01.png,renaissance,Renaissance oil portrait of a merchant holding a sealed letter,recraftv4_1_flash_v2,1024x1024,2026-11-14T22:26:16.769606+00:00
+07_renaissance_02.png,renaissance,Renaissance oil portrait of a merchant holding a sealed letter,recraftv4_1_flash_v2,1024x1024,2026-11-14T22:26:16.769606+00:00
+08_romanticism_01.png,romanticism,Romantic landscape painting of a ship approaching a rocky coast in a storm,recraftv4_1_flash_v2,1024x1024,2026-11-14T22:26:19.564479+00:00
+08_romanticism_02.png,romanticism,Romantic landscape painting of a ship approaching a rocky coast in a storm,recraftv4_1_flash_v2,1024x1024,2026-11-14T22:26:19.564479+00:00
+09_surrealism_01.png,surrealism,Surrealist painting of an empty railway platform floating above a desert,recraftv4_1_flash_v2,1024x1024,2026-11-14T22:26:22.299832+00:00
+09_surrealism_02.png,surrealism,Surrealist painting of an empty railway platform floating above a desert,recraftv4_1_flash_v2,1024x1024,2026-11-14T22:26:22.299832+00:00
+10_ukiyo_e_01.png,ukiyo_e,Ukiyo-e woodblock print of travelers crossing a bridge in heavy rain,recraftv4_1_flash_v2,1024x1024,2026-11-14T22:26:25.241626+00:00
+10_ukiyo_e_02.png,ukiyo_e,Ukiyo-e woodblock print of travelers crossing a bridge in heavy rain,recraftv4_1_flash_v2,1024x1024,2026-11-14T22:26:25.241626+00:00

@@ -1,0 +1,121 @@
+{
+  "selection": {
+    "seed": 42,
+    "selection": "Styles and paths sorted, one random.Random(42); shuffle each style, retain first 60 eligible; no score-based selection",
+    "checked_train_validation": 4800,
+    "checked_main_test": 1200,
+    "selected_sd": 600,
+    "duplicate_checks": [
+      "file bytes",
+      "RGB pixels with native dimensions",
+      "RGB pixels after common 256x256 normalization"
+    ],
+    "exclusions": 0,
+    "exclusion_counts": {}
+  },
+  "thresholds": {
+    "logistic_full": 0.7903385087201857,
+    "logistic_no_frequency": 0.7582680947254987,
+    "cnn": 0.8154128789901735
+  },
+  "backend": "cpu",
+  "batch_size": 32,
+  "reference_rule": "RGB decode, LANCZOS resize to 256x256 only if necessary; no JPEG encode before make_variants",
+  "prediction_rows": 37800,
+  "paired_pixel_checks": 12600,
+  "native_dimensions": {
+    "Human: 256x256": 600,
+    "Latent Diffusion: 256x256": 600,
+    "Stable Diffusion: 768x768": 600
+  },
+  "input_sha256": {
+    "dataset_manifest.csv": "e04565ff1a9b44a817501680db0dafb316d58e122429bac526b414e5b205a606"
+  },
+  "model_sha256": {
+    "cnn_model.pt": "8a98bbff594afb7d26c4127705abd2143d893edcbe84dc003b0df0142bf15ffe",
+    "logistic_full.joblib": "3baf903f52302a57d867cb389971d9addbba0223f20b7bcf7217cb71cc30a70c",
+    "logistic_no_frequency.joblib": "89513da14654edc86cae3b01ee8e173188e573aa0efecb916045cfd10316c41e"
+  },
+  "environment": {
+    "python": "3.9.6",
+    "torch": "2.7.1",
+    "numpy": "2.0.2",
+    "sklearn": "1.6.1",
+    "pillow": "11.3.0",
+    "threads": 4
+  },
+  "inference": "Descriptive only, no hypothesis tests; LD and SD are distinct unpaired groups; Human FPR is shared",
+  "provenance": {
+    "dataset_url": "https://www.kaggle.com/datasets/ravidussilva/real-ai-art",
+    "primary_paper": "https://arxiv.org/html/2412.01512v1",
+    "archive_version": "not recorded",
+    "sd_model_attribution": "Stable Diffusion v2-1 according to dataset authors; not independently recoverable from JPEG pixels"
+  },
+  "elapsed_seconds": 111.15267262500001,
+  "execution_commands": [
+    {
+      "args": [
+        "/Users/leapierre/Desktop/ai-art-robustness/.venv_repro/bin/python",
+        "-m",
+        "analysis.evaluate_stable_diffusion"
+      ],
+      "cwd": "evaluation",
+      "seconds": 113.645709167,
+      "returncode": 0
+    },
+    {
+      "args": [
+        "/Users/leapierre/Desktop/ai-art-robustness/.venv_repro/bin/python",
+        "-m",
+        "analysis.evaluate_robustness"
+      ],
+      "cwd": "baseline",
+      "seconds": 59.2085185,
+      "returncode": 0
+    }
+  ],
+  "independent_audit": {
+    "selection_seed": 42,
+    "selection_independently_replayed": true,
+    "sd_official_test_images": 600,
+    "sd_per_style": 60,
+    "main_human_ld_reference_unchanged": true,
+    "train_validation_comparisons": 4800,
+    "no_exact_file_or_native_rgb_or_256_rgb_overlap": true,
+    "source_headers_checked": 62923,
+    "all_12600_variant_pixel_hashes_recomputed": true,
+    "all_normalization_before_variants_verified": true,
+    "models_match_commit_20291cb": true,
+    "thresholds": {
+      "logistic_full": 0.7903385087201857,
+      "logistic_no_frequency": 0.7582680947254987,
+      "cnn": 0.8154128789901735
+    },
+    "predictions": 37800,
+    "summary_rows": 21,
+    "all_metrics_and_paired_flips_recomputed": true,
+    "same_cpu_reference_predictions_exact": 25200,
+    "historical_mps_comparison": {
+      "logistic_full": {
+        "max_abs_score_difference": 0.0,
+        "mean_abs_score_difference": 0.0,
+        "changed_decisions": 0,
+        "n": 8400
+      },
+      "logistic_no_frequency": {
+        "max_abs_score_difference": 0.0,
+        "mean_abs_score_difference": 0.0,
+        "changed_decisions": 0,
+        "n": 8400
+      },
+      "cnn": {
+        "max_abs_score_difference": 5.662441253662109e-07,
+        "mean_abs_score_difference": 3.315709320650924e-08,
+        "changed_decisions": 0,
+        "n": 8400
+      }
+    },
+    "preexisting_files_unchanged": 132
+  },
+  "experiment_manifest_sha256": "afbcf61ecc4a84a20dedfc73ac2ae7f02494e701a002beea6194f25fdc0cf4b6"
+}

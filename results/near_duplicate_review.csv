@@ -1,0 +1,6 @@
+train_path,train_source,train_style,test_path,test_source,test_style,review_decision,action
+train/AI_LD_art_nouveau/0-388531444-896668.jpg,Latent Diffusion,art_nouveau,test/AI_LD_art_nouveau/0-151064397-50122.jpg,Latent Diffusion,art_nouveau,visually_distinct,keep_both
+train/AI_LD_art_nouveau/0-935421780-608785.jpg,Latent Diffusion,art_nouveau,test/AI_LD_baroque/1-160851094-529591.jpg,Latent Diffusion,baroque,visually_distinct,keep_both
+train/AI_LD_baroque/1-935845835-803798.jpg,Latent Diffusion,baroque,test/AI_LD_art_nouveau/0-155528599-677093.jpg,Latent Diffusion,art_nouveau,visually_distinct,keep_both
+train/AI_LD_renaissance/6-299785120-335717.jpg,Latent Diffusion,renaissance,test/AI_LD_art_nouveau/0-20941268-798613.jpg,Latent Diffusion,art_nouveau,visually_distinct,keep_both
+train/AI_LD_renaissance/6-8929344-2283.jpg,Latent Diffusion,renaissance,test/romanticism/charles-turner_louis-xviii-king-of-france-1812.jpg,Human,romanticism,visually_distinct,keep_both

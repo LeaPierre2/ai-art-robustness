@@ -1,0 +1,3 @@
+# Preserve Python CSV CRLF line endings and validated hashes.
+# Adjust whitespace checks without converting line endings.
+*.csv whitespace=trailing-space,space-before-tab,cr-at-eol

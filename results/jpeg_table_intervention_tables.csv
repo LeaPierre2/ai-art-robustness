@@ -1,0 +1,257 @@
+condition,source,table_id,index,value
+tables_human,Human,0,0,2
+tables_human,Human,0,1,1
+tables_human,Human,0,2,1
+tables_human,Human,0,3,2
+tables_human,Human,0,4,2
+tables_human,Human,0,5,4
+tables_human,Human,0,6,5
+tables_human,Human,0,7,6
+tables_human,Human,0,8,1
+tables_human,Human,0,9,1
+tables_human,Human,0,10,1
+tables_human,Human,0,11,2
+tables_human,Human,0,12,3
+tables_human,Human,0,13,6
+tables_human,Human,0,14,6
+tables_human,Human,0,15,6
+tables_human,Human,0,16,1
+tables_human,Human,0,17,1
+tables_human,Human,0,18,2
+tables_human,Human,0,19,2
+tables_human,Human,0,20,4
+tables_human,Human,0,21,6
+tables_human,Human,0,22,7
+tables_human,Human,0,23,6
+tables_human,Human,0,24,1
+tables_human,Human,0,25,2
+tables_human,Human,0,26,2
+tables_human,Human,0,27,3
+tables_human,Human,0,28,5
+tables_human,Human,0,29,9
+tables_human,Human,0,30,8
+tables_human,Human,0,31,6
+tables_human,Human,0,32,2
+tables_human,Human,0,33,2
+tables_human,Human,0,34,4
+tables_human,Human,0,35,6
+tables_human,Human,0,36,7
+tables_human,Human,0,37,11
+tables_human,Human,0,38,10
+tables_human,Human,0,39,8
+tables_human,Human,0,40,2
+tables_human,Human,0,41,4
+tables_human,Human,0,42,6
+tables_human,Human,0,43,6
+tables_human,Human,0,44,8
+tables_human,Human,0,45,10
+tables_human,Human,0,46,11
+tables_human,Human,0,47,9
+tables_human,Human,0,48,5
+tables_human,Human,0,49,6
+tables_human,Human,0,50,8
+tables_human,Human,0,51,9
+tables_human,Human,0,52,10
+tables_human,Human,0,53,12
+tables_human,Human,0,54,12
+tables_human,Human,0,55,10
+tables_human,Human,0,56,7
+tables_human,Human,0,57,9
+tables_human,Human,0,58,10
+tables_human,Human,0,59,10
+tables_human,Human,0,60,11
+tables_human,Human,0,61,10
+tables_human,Human,0,62,10
+tables_human,Human,0,63,10
+tables_human,Human,1,0,2
+tables_human,Human,1,1,2
+tables_human,Human,1,2,2
+tables_human,Human,1,3,5
+tables_human,Human,1,4,10
+tables_human,Human,1,5,10
+tables_human,Human,1,6,10
+tables_human,Human,1,7,10
+tables_human,Human,1,8,2
+tables_human,Human,1,9,2
+tables_human,Human,1,10,3
+tables_human,Human,1,11,7
+tables_human,Human,1,12,10
+tables_human,Human,1,13,10
+tables_human,Human,1,14,10
+tables_human,Human,1,15,10
+tables_human,Human,1,16,2
+tables_human,Human,1,17,3
+tables_human,Human,1,18,6
+tables_human,Human,1,19,10
+tables_human,Human,1,20,10
+tables_human,Human,1,21,10
+tables_human,Human,1,22,10
+tables_human,Human,1,23,10
+tables_human,Human,1,24,5
+tables_human,Human,1,25,7
+tables_human,Human,1,26,10
+tables_human,Human,1,27,10
+tables_human,Human,1,28,10
+tables_human,Human,1,29,10
+tables_human,Human,1,30,10
+tables_human,Human,1,31,10
+tables_human,Human,1,32,10
+tables_human,Human,1,33,10
+tables_human,Human,1,34,10
+tables_human,Human,1,35,10
+tables_human,Human,1,36,10
+tables_human,Human,1,37,10
+tables_human,Human,1,38,10
+tables_human,Human,1,39,10
+tables_human,Human,1,40,10
+tables_human,Human,1,41,10
+tables_human,Human,1,42,10
+tables_human,Human,1,43,10
+tables_human,Human,1,44,10
+tables_human,Human,1,45,10
+tables_human,Human,1,46,10
+tables_human,Human,1,47,10
+tables_human,Human,1,48,10
+tables_human,Human,1,49,10
+tables_human,Human,1,50,10
+tables_human,Human,1,51,10
+tables_human,Human,1,52,10
+tables_human,Human,1,53,10
+tables_human,Human,1,54,10
+tables_human,Human,1,55,10
+tables_human,Human,1,56,10
+tables_human,Human,1,57,10
+tables_human,Human,1,58,10
+tables_human,Human,1,59,10
+tables_human,Human,1,60,10
+tables_human,Human,1,61,10
+tables_human,Human,1,62,10
+tables_human,Human,1,63,10
+tables_ld,Latent Diffusion,0,0,8
+tables_ld,Latent Diffusion,0,1,6
+tables_ld,Latent Diffusion,0,2,5
+tables_ld,Latent Diffusion,0,3,8
+tables_ld,Latent Diffusion,0,4,12
+tables_ld,Latent Diffusion,0,5,20
+tables_ld,Latent Diffusion,0,6,26
+tables_ld,Latent Diffusion,0,7,31
+tables_ld,Latent Diffusion,0,8,6
+tables_ld,Latent Diffusion,0,9,6
+tables_ld,Latent Diffusion,0,10,7
+tables_ld,Latent Diffusion,0,11,10
+tables_ld,Latent Diffusion,0,12,13
+tables_ld,Latent Diffusion,0,13,29
+tables_ld,Latent Diffusion,0,14,30
+tables_ld,Latent Diffusion,0,15,28
+tables_ld,Latent Diffusion,0,16,7
+tables_ld,Latent Diffusion,0,17,7
+tables_ld,Latent Diffusion,0,18,8
+tables_ld,Latent Diffusion,0,19,12
+tables_ld,Latent Diffusion,0,20,20
+tables_ld,Latent Diffusion,0,21,29
+tables_ld,Latent Diffusion,0,22,35
+tables_ld,Latent Diffusion,0,23,28
+tables_ld,Latent Diffusion,0,24,7
+tables_ld,Latent Diffusion,0,25,9
+tables_ld,Latent Diffusion,0,26,11
+tables_ld,Latent Diffusion,0,27,15
+tables_ld,Latent Diffusion,0,28,26
+tables_ld,Latent Diffusion,0,29,44
+tables_ld,Latent Diffusion,0,30,40
+tables_ld,Latent Diffusion,0,31,31
+tables_ld,Latent Diffusion,0,32,9
+tables_ld,Latent Diffusion,0,33,11
+tables_ld,Latent Diffusion,0,34,19
+tables_ld,Latent Diffusion,0,35,28
+tables_ld,Latent Diffusion,0,36,34
+tables_ld,Latent Diffusion,0,37,55
+tables_ld,Latent Diffusion,0,38,52
+tables_ld,Latent Diffusion,0,39,39
+tables_ld,Latent Diffusion,0,40,12
+tables_ld,Latent Diffusion,0,41,18
+tables_ld,Latent Diffusion,0,42,28
+tables_ld,Latent Diffusion,0,43,32
+tables_ld,Latent Diffusion,0,44,41
+tables_ld,Latent Diffusion,0,45,52
+tables_ld,Latent Diffusion,0,46,57
+tables_ld,Latent Diffusion,0,47,46
+tables_ld,Latent Diffusion,0,48,25
+tables_ld,Latent Diffusion,0,49,32
+tables_ld,Latent Diffusion,0,50,39
+tables_ld,Latent Diffusion,0,51,44
+tables_ld,Latent Diffusion,0,52,52
+tables_ld,Latent Diffusion,0,53,61
+tables_ld,Latent Diffusion,0,54,60
+tables_ld,Latent Diffusion,0,55,51
+tables_ld,Latent Diffusion,0,56,36
+tables_ld,Latent Diffusion,0,57,46
+tables_ld,Latent Diffusion,0,58,48
+tables_ld,Latent Diffusion,0,59,49
+tables_ld,Latent Diffusion,0,60,56
+tables_ld,Latent Diffusion,0,61,50
+tables_ld,Latent Diffusion,0,62,52
+tables_ld,Latent Diffusion,0,63,50
+tables_ld,Latent Diffusion,1,0,9
+tables_ld,Latent Diffusion,1,1,9
+tables_ld,Latent Diffusion,1,2,12
+tables_ld,Latent Diffusion,1,3,24
+tables_ld,Latent Diffusion,1,4,50
+tables_ld,Latent Diffusion,1,5,50
+tables_ld,Latent Diffusion,1,6,50
+tables_ld,Latent Diffusion,1,7,50
+tables_ld,Latent Diffusion,1,8,9
+tables_ld,Latent Diffusion,1,9,11
+tables_ld,Latent Diffusion,1,10,13
+tables_ld,Latent Diffusion,1,11,33
+tables_ld,Latent Diffusion,1,12,50
+tables_ld,Latent Diffusion,1,13,50
+tables_ld,Latent Diffusion,1,14,50
+tables_ld,Latent Diffusion,1,15,50
+tables_ld,Latent Diffusion,1,16,12
+tables_ld,Latent Diffusion,1,17,13
+tables_ld,Latent Diffusion,1,18,28
+tables_ld,Latent Diffusion,1,19,50
+tables_ld,Latent Diffusion,1,20,50
+tables_ld,Latent Diffusion,1,21,50
+tables_ld,Latent Diffusion,1,22,50
+tables_ld,Latent Diffusion,1,23,50
+tables_ld,Latent Diffusion,1,24,24
+tables_ld,Latent Diffusion,1,25,33
+tables_ld,Latent Diffusion,1,26,50
+tables_ld,Latent Diffusion,1,27,50
+tables_ld,Latent Diffusion,1,28,50
+tables_ld,Latent Diffusion,1,29,50
+tables_ld,Latent Diffusion,1,30,50
+tables_ld,Latent Diffusion,1,31,50
+tables_ld,Latent Diffusion,1,32,50
+tables_ld,Latent Diffusion,1,33,50
+tables_ld,Latent Diffusion,1,34,50
+tables_ld,Latent Diffusion,1,35,50
+tables_ld,Latent Diffusion,1,36,50
+tables_ld,Latent Diffusion,1,37,50
+tables_ld,Latent Diffusion,1,38,50
+tables_ld,Latent Diffusion,1,39,50
+tables_ld,Latent Diffusion,1,40,50
+tables_ld,Latent Diffusion,1,41,50
+tables_ld,Latent Diffusion,1,42,50
+tables_ld,Latent Diffusion,1,43,50
+tables_ld,Latent Diffusion,1,44,50
+tables_ld,Latent Diffusion,1,45,50
+tables_ld,Latent Diffusion,1,46,50
+tables_ld,Latent Diffusion,1,47,50
+tables_ld,Latent Diffusion,1,48,50
+tables_ld,Latent Diffusion,1,49,50
+tables_ld,Latent Diffusion,1,50,50
+tables_ld,Latent Diffusion,1,51,50
+tables_ld,Latent Diffusion,1,52,50
+tables_ld,Latent Diffusion,1,53,50
+tables_ld,Latent Diffusion,1,54,50
+tables_ld,Latent Diffusion,1,55,50
+tables_ld,Latent Diffusion,1,56,50
+tables_ld,Latent Diffusion,1,57,50
+tables_ld,Latent Diffusion,1,58,50
+tables_ld,Latent Diffusion,1,59,50
+tables_ld,Latent Diffusion,1,60,50
+tables_ld,Latent Diffusion,1,61,50
+tables_ld,Latent Diffusion,1,62,50
+tables_ld,Latent Diffusion,1,63,50

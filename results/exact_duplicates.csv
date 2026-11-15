@@ -1,0 +1,11 @@
+group_id,path,original_split,source,style
+1,train/AI_LD_romanticism/7-954093981-413574.jpg,train,Latent Diffusion,romanticism
+1,train/AI_LD_romanticism/7-954093981-628073.jpg,train,Latent Diffusion,romanticism
+2,train/AI_LD_romanticism/7-954093981-483345.jpg,train,Latent Diffusion,romanticism
+2,train/AI_LD_romanticism/7-954093981-712259.jpg,train,Latent Diffusion,romanticism
+3,train/AI_LD_romanticism/7-954093981-571357.jpg,train,Latent Diffusion,romanticism
+3,train/AI_LD_romanticism/7-954093981-811818.jpg,train,Latent Diffusion,romanticism
+4,train/AI_LD_romanticism/7-954093981-769436.jpg,train,Latent Diffusion,romanticism
+4,train/AI_LD_romanticism/7-954093981-881841.jpg,train,Latent Diffusion,romanticism
+5,train/surrealism/Penrose_1949_The_flight_of_Time.jpg,train,Human,surrealism
+5,test/surrealism/Penrose_1949_The_flight_of_time.jpg,test,Human,surrealism

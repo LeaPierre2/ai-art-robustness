@@ -1,0 +1,4 @@
+source,jpeg_profile,matching_pillow_qualities
+Human,2,95
+Latent Diffusion,1,75
+Stable Diffusion,1,75

@@ -1,0 +1,155 @@
+{
+  "control": {
+    "filename": "cnn_augmentation_control_seed_43.pt",
+    "sha256": "c771a3c7adb1851e540ed1d13a236c2637ef9952007cdc462dd2a78bb84278da",
+    "threshold": 0.6667082309722902,
+    "epoch": 8,
+    "device": "cpu",
+    "augmentation": null
+  },
+  "augmented": {
+    "filename": "cnn_augmentation_augmented_seed_43.pt",
+    "sha256": "0ac613c0e62f26269989568302ae24b6f12ce747f96e25e6b776817cae276547",
+    "threshold": 0.722858488559723,
+    "epoch": 8,
+    "device": "cpu",
+    "augmentation": {
+      "seed": 43,
+      "original_probability": 0.5,
+      "transformed_probability_each": 0.08333333333333333,
+      "rng": "random.Random(seed), indépendant de Torch, num_workers=0",
+      "epochs_executed": 8,
+      "counts_all_epochs": {
+        "0": {
+          "reference": 8291,
+          "jpeg_85": 1373,
+          "jpeg_60": 1467,
+          "jpeg_35": 1406,
+          "resize_128": 1415,
+          "resize_64": 1424,
+          "resize_128_then_jpeg_60": 1424
+        },
+        "1": {
+          "reference": 8400,
+          "jpeg_85": 1346,
+          "jpeg_60": 1424,
+          "jpeg_35": 1387,
+          "resize_128": 1412,
+          "resize_64": 1443,
+          "resize_128_then_jpeg_60": 1388
+        }
+      }
+    }
+  },
+  "seed": 43,
+  "manifest_sha256": "e04565ff1a9b44a817501680db0dafb316d58e122429bac526b414e5b205a606",
+  "evaluation_seconds": 52.7555575,
+  "paired_tests": "McNemar exact bilatéral, Holm commun aux 14 tests (7 conditions × FPR/TPR)",
+  "descriptive": "AUC, variations vs originaux et différences de ces variations, sans test d'interaction",
+  "training_commands": [
+    {
+      "args": [
+        "$PY",
+        "-m",
+        "analysis.train_cnn",
+        "--seed",
+        "43"
+      ],
+      "cwd": "seed-43",
+      "seconds": 343.95921433300003,
+      "returncode": 0
+    },
+    {
+      "args": [
+        "$PY",
+        "-m",
+        "analysis.train_cnn",
+        "--seed",
+        "43",
+        "--augment",
+        "--output-model",
+        "cnn_augmentation_augmented_seed_43.pt"
+      ],
+      "cwd": "seed-43",
+      "seconds": 343.95892079199996,
+      "returncode": 0
+    }
+  ],
+  "evaluation_command": {
+    "args": [
+      "$PY",
+      "-m",
+      "analysis.cnn_augmentation",
+      "--seed",
+      "43"
+    ],
+    "cwd": "seed-43",
+    "seconds": 54.51211683399998,
+    "returncode": 0
+  },
+  "environment": {
+    "python": "3.9.6 (default, Apr 30 2025, 02:07:17) \n[Clang 17.0.0 (clang-1700.0.13.5)]",
+    "torch": "2.7.1",
+    "numpy": "2.0.2",
+    "sklearn": "1.6.1",
+    "pillow": "11.3.0",
+    "mps_available": false,
+    "threads": 4
+  },
+  "audit": {
+    "prediction_rows": 16800,
+    "summary_rows": 14,
+    "comparison_rows": 7,
+    "aligned_images_per_condition": 1200,
+    "constant_thresholds": true,
+    "paired_tests": 14,
+    "holm_independently_recomputed": true,
+    "validation_original_only": true,
+    "validation": [
+      {
+        "variant": "control",
+        "threshold": 0.6667082309722902,
+        "threshold_recomputed": 0.6667082309722902,
+        "original_validation_fp": 15,
+        "original_validation_humans": 300,
+        "validation_auc": 0.8834777777777777,
+        "validation_ai_detected": 122,
+        "epoch": 8
+      },
+      {
+        "variant": "augmented",
+        "threshold": 0.722858488559723,
+        "threshold_recomputed": 0.722858488559723,
+        "original_validation_fp": 15,
+        "original_validation_humans": 300,
+        "validation_auc": 0.8862333333333333,
+        "validation_ai_detected": 144,
+        "epoch": 8
+      }
+    ],
+    "augmentation_counts": {
+      "0": {
+        "reference": 8291,
+        "jpeg_85": 1373,
+        "jpeg_60": 1467,
+        "jpeg_35": 1406,
+        "resize_128": 1415,
+        "resize_64": 1424,
+        "resize_128_then_jpeg_60": 1424
+      },
+      "1": {
+        "reference": 8400,
+        "jpeg_85": 1346,
+        "jpeg_60": 1424,
+        "jpeg_35": 1387,
+        "resize_128": 1412,
+        "resize_64": 1443,
+        "resize_128_then_jpeg_60": 1388
+      }
+    },
+    "control_original_command_matches_validated_cpu_model": true,
+    "control_predictions_match_validated_cpu": true
+  },
+  "manifest_unchanged": true,
+  "main_and_seed42_artifacts_unchanged": true
+}

@@ -1,0 +1,31 @@
+# Local Python environments and caches
+/.venv*/
+__pycache__/
+*.py[cod]
+
+# Raw data downloaded from Kaggle
+/data/raw
+
+# Local files and secrets
+.DS_Store
+.env
+.env.*
+/code_for_review*.txt
+
+# Local application and stored Word drafts
+/local/
+/docs/*.docx
+
+# Generated checkpoints (kept locally, rebuilt from raw data)
+*.pt
+*.joblib
+
+# Local editor settings
+.vscode/
+.idea/
+*.code-workspace
+
+# Tool caches
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/

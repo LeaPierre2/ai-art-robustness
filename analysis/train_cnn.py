@@ -191,7 +191,7 @@ def main() -> None:
             "original_probability": 0.5,
             "transformed_probability_each": 1 / 12,
             # Historical checkpoint value: RNG independent of Torch, num_workers=0.
-            "rng": "random.Random(seed), indépendant de Torch, num_workers=0",
+            "rng": "random.Random(seed), independent of PyTorch, num_workers=0",
             "epochs_executed": EPOCHS,
             "counts_all_epochs": {
                 label: {

@@ -186,35 +186,6 @@ def check_manifest() -> None:
     print(f"Results saved : {output.name}")
 
 
-def translate_manifest_review_labels() -> None:
-    """Refresh captions of the historical sheet, keeping its thumbnails unchanged.
-
-    The original full renderer was not saved. This deliberately requires the
-    delivered 640-pixel-wide sheet and only updates its 30-pixel caption bands.
-    It does not reconstruct or reinterpret the historical visual review.
-    """
-    with result_path("manifest_near_duplicate_candidates.csv").open(
-        newline="", encoding="utf-8"
-    ) as file:
-        pairs = list(csv.DictReader(file))
-    path = figure_path("manifest_near_duplicate_review.png")
-    with Image.open(path) as image:
-        sheet = image.convert("RGB")
-    if not pairs or sheet.size != (640, 300 * len(pairs)):
-        raise ValueError("Historical manifest review dimensions do not match the candidate list.")
-    draw = ImageDraw.Draw(sheet)
-    for number, pair in enumerate(pairs, 1):
-        y = (number - 1) * 300
-        draw.rectangle((0, y, 639, y + 29), fill="white")
-        for column, suffix in enumerate(("a", "b")):
-            draw.text(
-                (column * 320 + 10, y + 10),
-                f"Pair {number} | {pair['split_' + suffix]} | dHash {pair['dhash_distance']}",
-                fill="black",
-            )
-    sheet.save(path)
-    print(f"Manifest review captions saved: {path.name}")
-
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)

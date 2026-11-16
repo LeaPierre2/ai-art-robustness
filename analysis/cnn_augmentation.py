@@ -245,8 +245,8 @@ def main() -> None:
         evaluation_seconds=time.perf_counter() - start,
         # Retain historical serialized wording: exact two-sided McNemar, joint Holm;
         # AUCs and differences of changes are descriptive, without an interaction test.
-        paired_tests="McNemar exact bilatéral, Holm commun aux 14 tests (7 conditions × FPR/TPR)",
-        descriptive="AUC, variations vs originaux et différences de ces variations, sans test d'interaction",
+        paired_tests="Exact two-sided McNemar tests with Holm correction across all 14 tests (7 conditions × FPR/TPR)",
+        descriptive="AUC, changes relative to original images, and differences in those changes are descriptive",
     )
     document_path(f"CNN_AUGMENTATION_SEED_{args.seed}.json").write_text(
         json.dumps(metadata, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"

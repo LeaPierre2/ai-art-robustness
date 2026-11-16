@@ -17,7 +17,7 @@
       "seed": 42,
       "original_probability": 0.5,
       "transformed_probability_each": 0.08333333333333333,
-      "rng": "random.Random(seed), indépendant de Torch, num_workers=0",
+      "rng": "random.Random(seed), independent of PyTorch, num_workers=0",
       "epochs_executed": 8,
       "counts_all_epochs": {
         "0": {
@@ -44,8 +44,8 @@
   "seed": 42,
   "manifest_sha256": "e04565ff1a9b44a817501680db0dafb316d58e122429bac526b414e5b205a606",
   "evaluation_seconds": 62.061647292,
-  "paired_tests": "McNemar exact bilatéral, Holm commun aux 14 tests (7 conditions × FPR/TPR)",
-  "descriptive": "AUC, variations vs originaux et différences de ces variations, sans test d'interaction",
+  "paired_tests": "Exact two-sided McNemar tests with Holm correction across all 14 tests (7 conditions × FPR/TPR)",
+  "descriptive": "AUC, changes relative to original images, and differences in those changes are descriptive",
   "training_commands": [
     {
       "variant": "control",

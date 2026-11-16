@@ -1,0 +1,14 @@
+\begin{table}[tb]
+\centering
+\small
+\caption{CNN augmentation effects over seeds 42--44. Values are means and observed min--max ranges in percentage points. Detection and FPR changes are augmented minus control. Loss attenuation subtracts the detection gain on originals from the gain on resized images.}
+\label{tab:cnn-augmentation}
+\begin{tabular}{lrrr}
+\hline
+Resize & Detection gain & Loss attenuation & FPR change \\
+\hline
+128 px & $+2.50$ [$-3.83$, $+7.67$] & $+2.28$ [$+0.83$, $+3.83$] & $-0.61$ [$-1.00$, $-0.33$] \\
+64 px & $+1.67$ [$-3.83$, $+5.67$] & $+1.44$ [$+0.83$, $+1.83$] & $-0.78$ [$-1.17$, $-0.33$] \\
+\hline
+\end{tabular}
+\end{table}

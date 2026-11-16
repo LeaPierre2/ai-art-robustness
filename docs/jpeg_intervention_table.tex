@@ -1,0 +1,15 @@
+\begin{table}[tb]
+\centering
+\small
+\caption{Changes in false positives when switching from Human to Latent Diffusion JPEG tables on the same 600 human artworks. FPR differences are in percentage points (pp). Adjusted p-values are from the six Holm-corrected McNemar tests.}
+\label{tab:jpeg-intervention}
+\begin{tabular}{lrrrr}
+\hline
+Model & New FP & Resolved FP & FPR change (pp) & Adjusted $p$ \\
+\hline
+Logistic regression (full) & 1 & 2 & -0.17 & 1.00 \\
+Logistic regression (no FFT) & 6 & 2 & +0.67 & 1.00 \\
+CNN & 0 & 0 & +0.00 & 1.00 \\
+\hline
+\end{tabular}
+\end{table}

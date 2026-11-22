@@ -32,7 +32,7 @@ def predict_test_rows(
     decisions = {}
 
     for start in range(0, len(test_rows), BATCH_SIZE):
-        batch = test_rows[start:start + BATCH_SIZE]
+        batch = test_rows[start : start + BATCH_SIZE]
         batch_variants = []
 
         for row in batch:
@@ -51,16 +51,18 @@ def predict_test_rows(
                 decisions.setdefault((name, condition), []).extend(predicted_ai)
 
                 for row, score, prediction in zip(batch, scores, predicted_ai):
-                    predictions.append({
-                        "image_id": row["image_id"],
-                        "source": row["source"],
-                        "style": row["style"],
-                        "label": row["label"],
-                        "model": name,
-                        "condition": condition,
-                        "score_ai": float(score),
-                        "predicted_ai": int(prediction),
-                    })
+                    predictions.append(
+                        {
+                            "image_id": row["image_id"],
+                            "source": row["source"],
+                            "style": row["style"],
+                            "label": row["label"],
+                            "model": name,
+                            "condition": condition,
+                            "score_ai": float(score),
+                            "predicted_ai": int(prediction),
+                        }
+                    )
 
         completed = start + len(batch)
         if completed % 160 == 0 or completed == len(test_rows):
@@ -92,19 +94,21 @@ def summarize_decisions(
         bootstrap_changes = 100 * change[bootstrap_indices].mean(axis=1)
         low, high = np.percentile(bootstrap_changes, [2.5, 97.5])
 
-        summary.append({
-            "model": name,
-            "condition": condition,
-            "false_positives": int(current.sum()),
-            "false_positive_rate_pct": 100 * current.mean(),
-            "ai_detected": int(predicted_ai[ai].sum()),
-            "ai_detection_rate_pct": 100 * predicted_ai[ai].mean(),
-            "delta_fpr_pp": 100 * change.mean(),
-            "delta_fpr_ci_low_pp": float(low),
-            "delta_fpr_ci_high_pp": float(high),
-            "new_false_positives": int((~reference & current).sum()),
-            "resolved_false_positives": int((reference & ~current).sum()),
-        })
+        summary.append(
+            {
+                "model": name,
+                "condition": condition,
+                "false_positives": int(current.sum()),
+                "false_positive_rate_pct": 100 * current.mean(),
+                "ai_detected": int(predicted_ai[ai].sum()),
+                "ai_detection_rate_pct": 100 * predicted_ai[ai].mean(),
+                "delta_fpr_pp": 100 * change.mean(),
+                "delta_fpr_ci_low_pp": float(low),
+                "delta_fpr_ci_high_pp": float(high),
+                "new_false_positives": int((~reference & current).sum()),
+                "resolved_false_positives": int((reference & ~current).sum()),
+            }
+        )
     return summary
 
 
@@ -119,10 +123,7 @@ def main() -> None:
     summary_filename = f"robustness_summary{suffix}.csv"
 
     with result_path("dataset_manifest.csv").open(newline="", encoding="utf-8") as file:
-        test_rows = [
-            row for row in csv.DictReader(file)
-            if row["split"] == "test"
-        ]
+        test_rows = [row for row in csv.DictReader(file) if row["split"] == "test"]
 
     labels = np.array([int(row["label"]) for row in test_rows])
     human = labels == 0
@@ -138,9 +139,7 @@ def main() -> None:
     logistic_models, cnn, device, thresholds = load_detectors(cnn_filename)
     print(f"CNN evaluated : {cnn_filename} | Device : {device}", flush=True)
 
-    predictions, decisions = predict_test_rows(
-        test_rows, logistic_models, cnn, device, thresholds
-    )
+    predictions, decisions = predict_test_rows(test_rows, logistic_models, cnn, device, thresholds)
 
     expected_predictions = 1200 * 7 * 3
     if len(predictions) != expected_predictions:
@@ -153,8 +152,7 @@ def main() -> None:
     for name in thresholds:
         print(f"\n{name}")
         print(
-            f"{'Condition':26} {'FP/600':>7} {'FPR':>8} "
-            f"{'AI detection':>13} {'Δ FPR (pp)':>12}"
+            f"{'Condition':26} {'FP/600':>7} {'FPR':>8} " f"{'AI detection':>13} {'Δ FPR (pp)':>12}"
         )
         for row in summary:
             if row["model"] == name:

@@ -85,7 +85,8 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--seed", type=int, default=SEED)
     parser.add_argument(
-        "--augment", action="store_true",
+        "--augment",
+        action="store_true",
         help="Augment training only: 50 %% originals, 50 %% across six variants.",
     )
     parser.add_argument(
@@ -97,15 +98,12 @@ def main() -> None:
     filename = "cnn_model.pt" if seed == SEED else f"cnn_model_seed_{seed}.pt"
     if args.augment:
         filename = (
-            "cnn_model_augmented.pt" if seed == SEED
-            else f"cnn_model_augmented_seed_{seed}.pt"
+            "cnn_model_augmented.pt" if seed == SEED else f"cnn_model_augmented_seed_{seed}.pt"
         )
     filename = args.output_model or filename
     if Path(filename).name != filename or Path(filename).suffix != ".pt":
         parser.error("--output-model must be a .pt filename in models/.")
-    if args.augment and (
-        filename == "cnn_model.pt" or filename.startswith("cnn_model_seed_")
-    ):
+    if args.augment and (filename == "cnn_model.pt" or filename.startswith("cnn_model_seed_")):
         parser.error("The primary model filename is reserved for the unaugmented CNN.")
     experiment_start = time.perf_counter()
 
@@ -115,9 +113,7 @@ def main() -> None:
     device = torch.device("mps" if torch.backends.mps.is_available() else "cpu")
     print(f"Device used : {device}", flush=True)
 
-    with result_path("dataset_manifest.csv").open(
-        newline="", encoding="utf-8"
-    ) as file:
+    with result_path("dataset_manifest.csv").open(newline="", encoding="utf-8") as file:
         rows = list(csv.DictReader(file))
 
     train_rows = [row for row in rows if row["split"] == "train"]
@@ -171,8 +167,7 @@ def main() -> None:
             best_epoch = epoch
             best_scores = scores.copy()
             best_weights = {
-                name: value.detach().cpu().clone()
-                for name, value in model.state_dict().items()
+                name: value.detach().cpu().clone() for name, value in model.state_dict().items()
             }
 
     human_scores = best_scores[val_labels == 0]
@@ -210,8 +205,10 @@ def main() -> None:
     print(f"Validation ROC-AUC : {best_auc:.4f}")
     print(f"Model saved : {output_path.name}")
     if args.augment or args.output_model:
-        print(f"Augmentation : {args.augment} | total time : "
-              f"{time.perf_counter() - experiment_start:.2f} s")
+        print(
+            f"Augmentation : {args.augment} | total time : "
+            f"{time.perf_counter() - experiment_start:.2f} s"
+        )
 
 
 if __name__ == "__main__":

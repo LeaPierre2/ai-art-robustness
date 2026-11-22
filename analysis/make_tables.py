@@ -47,17 +47,19 @@ def main() -> None:
         name = baseline_names[row["baseline"]]
         lines.append(f"| {name} | {float(row['test_roc_auc']):.4f} |")
 
-    lines.extend([
-        "",
-        "## Detection performance by model and transformation",
-        "",
-        "The test set contains 600 human artworks and 600 AI-generated images.",
-        "Decision thresholds were fixed on the validation set.",
-        "",
-        "| Model | Condition | FPR (%) | Change in FPR (pp) | "
-        "AI detection (%) | ROC-AUC | Holm-adjusted p |",
-        "|---|---|---:|---:|---:|---:|---:|",
-    ])
+    lines.extend(
+        [
+            "",
+            "## Detection performance by model and transformation",
+            "",
+            "The test set contains 600 human artworks and 600 AI-generated images.",
+            "Decision thresholds were fixed on the validation set.",
+            "",
+            "| Model | Condition | FPR (%) | Change in FPR (pp) | "
+            "AI detection (%) | ROC-AUC | Holm-adjusted p |",
+            "|---|---|---:|---:|---:|---:|---:|",
+        ]
+    )
     for model, model_name in MODELS.items():
         for condition, condition_name in CONDITIONS.items():
             key = (model, condition)
@@ -73,17 +75,19 @@ def main() -> None:
                 f"{float(scores[key]['roc_auc']):.4f} | {p_value} |"
             )
 
-    lines.extend([
-        "",
-        "## Frequency-feature ablation",
-        "",
-        "The contrast is the change in FPR without frequency features minus "
-        "the change in FPR with frequency features. Confidence intervals are "
-        "paired bootstrap intervals for each condition, without multiplicity adjustment.",
-        "",
-        "| Condition | Difference in FPR changes (pp) | 95% CI (pp) |",
-        "|---|---:|---:|",
-    ])
+    lines.extend(
+        [
+            "",
+            "## Frequency-feature ablation",
+            "",
+            "The contrast is the change in FPR without frequency features minus "
+            "the change in FPR with frequency features. Confidence intervals are "
+            "paired bootstrap intervals for each condition, without multiplicity adjustment.",
+            "",
+            "| Condition | Difference in FPR changes (pp) | 95% CI (pp) |",
+            "|---|---:|---:|",
+        ]
+    )
     for row in ablation:
         name = CONDITIONS[row["condition"]]
         difference = float(row["difference_without_minus_full_pp"])

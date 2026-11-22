@@ -13,14 +13,9 @@ from .detectors import select_threshold
 from .paths import model_path, result_path
 
 
-def feature_matrix(
-    selected_rows: list[dict[str, str]], columns: list[str]
-) -> np.ndarray:
+def feature_matrix(selected_rows: list[dict[str, str]], columns: list[str]) -> np.ndarray:
     """Keep the row and column order defined by the feature CSV."""
-    return np.array([
-        [float(row[name]) for name in columns]
-        for row in selected_rows
-    ])
+    return np.array([[float(row[name]) for name in columns] for row in selected_rows])
 
 
 def main() -> None:
@@ -29,8 +24,7 @@ def main() -> None:
     with feature_table.open(newline="", encoding="utf-8") as file:
         reader = csv.DictReader(file)
         all_features = [
-            name for name in reader.fieldnames
-            if name.startswith(("color_", "edge_", "freq_"))
+            name for name in reader.fieldnames if name.startswith(("color_", "edge_", "freq_"))
         ]
         rows = list(reader)
 
@@ -42,9 +36,7 @@ def main() -> None:
 
     feature_sets = {
         "logistic_full": all_features,
-        "logistic_no_frequency": [
-            name for name in all_features if not name.startswith("freq_")
-        ],
+        "logistic_no_frequency": [name for name in all_features if not name.startswith("freq_")],
     }
 
     if [len(columns) for columns in feature_sets.values()] != [55, 52]:

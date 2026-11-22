@@ -72,19 +72,31 @@ def detect_candidates() -> None:
 
     with open_result(output_path, "w", newline="", encoding="utf-8") as csv_file:
         writer = csv.writer(csv_file)
-        writer.writerow([
-            "train_path", "train_source", "train_style",
-            "test_path", "test_source", "test_style",
-        ])
+        writer.writerow(
+            [
+                "train_path",
+                "train_source",
+                "train_style",
+                "test_path",
+                "test_source",
+                "test_style",
+            ]
+        )
 
         for checked, train_row in enumerate(rows_by_split["train"], start=1):
             fingerprint = perceptual_hash(DATASET_DIR / train_row["path"])
 
             for test_row in test_by_hash.get(fingerprint, []):
-                writer.writerow([
-                    train_row["path"], train_row["source"], train_row["style"],
-                    test_row["path"], test_row["source"], test_row["style"],
-                ])
+                writer.writerow(
+                    [
+                        train_row["path"],
+                        train_row["source"],
+                        train_row["style"],
+                        test_row["path"],
+                        test_row["source"],
+                        test_row["style"],
+                    ]
+                )
                 pair_count += 1
 
             if checked % 10000 == 0:
@@ -98,9 +110,7 @@ def detect_candidates() -> None:
 def render_review() -> None:
     """Rebuild the review; without candidates, report this and retain any existing image."""
 
-    with result_path("near_duplicate_candidates.csv").open(
-        newline="", encoding="utf-8"
-    ) as file:
+    with result_path("near_duplicate_candidates.csv").open(newline="", encoding="utf-8") as file:
         pairs = list(csv.DictReader(file))
 
     if not pairs:
@@ -159,11 +169,19 @@ def check_manifest() -> None:
             other = rows[previous]
             distance = bin(fingerprint ^ fingerprints[previous]).count("1")
             if distance <= MAX_DISTANCE:
-                matches.append([
-                    distance,
-                    other["image_id"], other["split"], other["source"], other["path"],
-                    row["image_id"], row["split"], row["source"], row["path"],
-                ])
+                matches.append(
+                    [
+                        distance,
+                        other["image_id"],
+                        other["split"],
+                        other["source"],
+                        other["path"],
+                        row["image_id"],
+                        row["split"],
+                        row["source"],
+                        row["path"],
+                    ]
+                )
 
         for block in blocks:
             indexed[block].append(index)
@@ -175,16 +193,23 @@ def check_manifest() -> None:
     output = result_path("manifest_near_duplicate_candidates.csv")
     with open_result(output, "w", newline="", encoding="utf-8") as file:
         writer = csv.writer(file)
-        writer.writerow([
-            "dhash_distance",
-            "image_id_a", "split_a", "source_a", "path_a",
-            "image_id_b", "split_b", "source_b", "path_b",
-        ])
+        writer.writerow(
+            [
+                "dhash_distance",
+                "image_id_a",
+                "split_a",
+                "source_a",
+                "path_a",
+                "image_id_b",
+                "split_b",
+                "source_b",
+                "path_b",
+            ]
+        )
         writer.writerows(sorted(matches))
 
     print(f"Candidate pairs across splits : {len(matches)}")
     print(f"Results saved : {output.name}")
-
 
 
 def main() -> None:

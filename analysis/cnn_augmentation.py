@@ -28,26 +28,27 @@ def evaluate_checkpoint(
     if variant == "cnn_control" and augmentation:
         raise ValueError("The control checkpoint must not use augmentation.")
     if variant == "cnn_augmented" and (
-        not augmentation or augmentation["seed"] != seed
+        not augmentation
+        or augmentation["seed"] != seed
         or augmentation["original_probability"] != 0.5
         or augmentation["transformed_probability_each"] != 1 / 12
     ):
         raise ValueError("The augmented checkpoint does not match the requested protocol.")
     cnn, device, threshold = load_cnn(filename)
     labels = np.array([int(row["label"]) for row in test_rows])
-    predictions, decisions = predict_test_rows(
-        test_rows, {}, cnn, device, {"cnn": threshold}
-    )
+    predictions, decisions = predict_test_rows(test_rows, {}, cnn, device, {"cnn": threshold})
     summary = summarize_decisions(decisions, labels == 0, labels == 1)
     by_condition = {
         condition: [row for row in predictions if row["condition"] == condition]
         for condition in VARIANT_NAMES
     }
     aucs = {
-        condition: float(roc_auc_score(
-            [int(row["label"]) for row in rows],
-            [row["score_ai"] for row in rows],
-        ))
+        condition: float(
+            roc_auc_score(
+                [int(row["label"]) for row in rows],
+                [row["score_ai"] for row in rows],
+            )
+        )
         for condition, rows in by_condition.items()
     }
     original_detection = next(
@@ -55,7 +56,9 @@ def evaluate_checkpoint(
     )
     for row in summary:
         row.update(
-            model=variant, seed=seed, threshold=threshold,
+            model=variant,
+            seed=seed,
+            threshold=threshold,
             roc_auc=aucs[row["condition"]],
             delta_detection_pp=row["ai_detection_rate_pct"] - original_detection,
             delta_auc=aucs[row["condition"]] - aucs["reference"],
@@ -104,19 +107,21 @@ def compare_models(
         ):
             row["control_" + name] = control[field]
             row["augmented_" + name] = augmented[field]
-            difference_name = {
-                "fpr_pct": "fpr_pp", "detection_pct": "detection_pp"
-            }.get(name, name)
+            difference_name = {"fpr_pct": "fpr_pp", "detection_pct": "detection_pp"}.get(name, name)
             row["difference_" + difference_name] = augmented[field] - control[field]
         for label, endpoint in ((0, "human_fp"), (1, "ai_detection")):
             ids = sorted(
-                image_id for model, cond, image_id in indexed
-                if model == "cnn_control" and cond == condition
+                image_id
+                for model, cond, image_id in indexed
+                if model == "cnn_control"
+                and cond == condition
                 and int(indexed[model, cond, image_id]["label"]) == label
             )
             augmented_ids = {
-                image_id for model, cond, image_id in indexed
-                if model == "cnn_augmented" and cond == condition
+                image_id
+                for model, cond, image_id in indexed
+                if model == "cnn_augmented"
+                and cond == condition
                 and int(indexed[model, cond, image_id]["label"]) == label
             }
             if len(ids) != 600 or set(ids) != augmented_ids:
@@ -127,7 +132,8 @@ def compare_models(
             lost = int(np.sum((before == 1) & (after == 0)))
             p_value = (
                 float(binomtest(gained, gained + lost, p=0.5, alternative="two-sided").pvalue)
-                if gained + lost else 1.0
+                if gained + lost
+                else 1.0
             )
             row[endpoint + "_gained_positive"] = gained
             row[endpoint + "_lost_positive"] = lost
@@ -156,7 +162,8 @@ def summarize_seeds() -> None:
         rows = read_result_rows(f"cnn_augmentation_comparison_seed_{seed}.csv")
         comparisons = {row["condition"]: row for row in rows}
         if (
-            len(rows) != len(VARIANT_NAMES) or set(comparisons) != set(VARIANT_NAMES)
+            len(rows) != len(VARIANT_NAMES)
+            or set(comparisons) != set(VARIANT_NAMES)
             or any(int(row["seed"]) != seed for row in rows)
         ):
             raise ValueError(f"Seed {seed}: expected seven unique conditions with matching seed.")
@@ -166,10 +173,12 @@ def summarize_seeds() -> None:
             gain = float(row["difference_detection_pp"])
             attenuation = gain - original_gain
             values = dict(
-                seed=seed, resolution_px=resolution,
+                seed=seed,
+                resolution_px=resolution,
                 control_detection_pct=float(row["control_detection_pct"]),
                 augmented_detection_pct=float(row["augmented_detection_pct"]),
-                gain_original_detection_pp=original_gain, gain_detection_pp=gain,
+                gain_original_detection_pp=original_gain,
+                gain_detection_pp=gain,
                 attenuation_loss_pp=attenuation,
                 control_fpr_pct=float(row["control_fpr_pct"]),
                 augmented_fpr_pct=float(row["augmented_fpr_pct"]),
@@ -179,28 +188,44 @@ def summarize_seeds() -> None:
                 raise ValueError(f"Seed {seed}, resize {resolution}: non-finite value.")
             for actual, expected in (
                 (gain, values["augmented_detection_pct"] - values["control_detection_pct"]),
-                (values["difference_fpr_pp"], values["augmented_fpr_pct"] - values["control_fpr_pct"]),
+                (
+                    values["difference_fpr_pp"],
+                    values["augmented_fpr_pct"] - values["control_fpr_pct"],
+                ),
                 (attenuation, float(row["difference_delta_detection_from_original_pp"])),
             ):
                 if not math.isclose(actual, expected, rel_tol=0, abs_tol=1e-12):
-                    raise ValueError(f"Seed {seed}, resize {resolution}: inconsistent saved differences.")
+                    raise ValueError(
+                        f"Seed {seed}, resize {resolution}: inconsistent saved differences."
+                    )
             synthesis.append(values)
     summary = []
     for resolution in (128, 64):
         for metric in ("gain_detection_pp", "attenuation_loss_pp", "difference_fpr_pp"):
             values = [row[metric] for row in synthesis if row["resolution_px"] == resolution]
-            signs = ["positive" if value > 1e-12 else "negative" if value < -1e-12 else "zero"
-                     for value in values]
-            summary.append(dict(
-                resolution_px=resolution, metric=metric, n_seeds=len(seeds),
-                mean_pp=mean(values), min_pp=min(values), max_pp=max(values),
-                sign_changes="positive" in signs and "negative" in signs,
-                signs_seed_42_43_44="/".join(signs), interpretation="descriptive_same_test_images",
-            ))
+            signs = [
+                "positive" if value > 1e-12 else "negative" if value < -1e-12 else "zero"
+                for value in values
+            ]
+            summary.append(
+                dict(
+                    resolution_px=resolution,
+                    metric=metric,
+                    n_seeds=len(seeds),
+                    mean_pp=mean(values),
+                    min_pp=min(values),
+                    max_pp=max(values),
+                    sign_changes="positive" in signs and "negative" in signs,
+                    signs_seed_42_43_44="/".join(signs),
+                    interpretation="descriptive_same_test_images",
+                )
+            )
     write_result_rows("cnn_augmentation_seed_synthesis.csv", synthesis)
     write_result_rows("cnn_augmentation_seed_summary.csv", summary)
-    print("Rebuilt cnn_augmentation_seed_synthesis.csv and cnn_augmentation_seed_summary.csv "
-          "from saved seed comparisons (six rows each); no training or inference.")
+    print(
+        "Rebuilt cnn_augmentation_seed_synthesis.csv and cnn_augmentation_seed_summary.csv "
+        "from saved seed comparisons (six rows each); no training or inference."
+    )
 
 
 def main() -> None:
@@ -208,7 +233,8 @@ def main() -> None:
     mode = parser.add_mutually_exclusive_group()
     mode.add_argument("--seed", type=int, default=42)
     mode.add_argument(
-        "--summarize-seeds", action="store_true",
+        "--summarize-seeds",
+        action="store_true",
         help="Rebuild the two cross-seed CSVs from saved comparisons for seeds 42, 43 and 44.",
     )
     args = parser.parse_args()
@@ -218,7 +244,8 @@ def main() -> None:
     start = time.perf_counter()
     test_rows = [row for row in read_result_rows("dataset_manifest.csv") if row["split"] == "test"]
     if (
-        len(test_rows) != 1200 or len({row["image_id"] for row in test_rows}) != 1200
+        len(test_rows) != 1200
+        or len({row["image_id"] for row in test_rows}) != 1200
         or sum(row["label"] == "0" for row in test_rows) != 600
         or sum(row["label"] == "1" for row in test_rows) != 600
     ):
@@ -241,7 +268,9 @@ def main() -> None:
     write_result_rows(prefix.format("comparison"), comparisons)
     metadata.update(
         seed=args.seed,
-        manifest_sha256=hashlib.sha256(result_path("dataset_manifest.csv").read_bytes()).hexdigest(),
+        manifest_sha256=hashlib.sha256(
+            result_path("dataset_manifest.csv").read_bytes()
+        ).hexdigest(),
         evaluation_seconds=time.perf_counter() - start,
         # Retain historical serialized wording: exact two-sided McNemar, joint Holm;
         # AUCs and differences of changes are descriptive, without an interaction test.
@@ -251,7 +280,9 @@ def main() -> None:
     document_path(f"CNN_AUGMENTATION_SEED_{args.seed}.json").write_text(
         json.dumps(metadata, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
     )
-    print("Condition | FPR control → augmented | Detection control → augmented | AUC control → augmented")
+    print(
+        "Condition | FPR control → augmented | Detection control → augmented | AUC control → augmented"
+    )
     for row in comparisons:
         print(
             f"{row['condition']} | {row['control_fpr_pct']:.2f} → {row['augmented_fpr_pct']:.2f} | "

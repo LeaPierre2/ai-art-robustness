@@ -21,6 +21,7 @@ The following commands use the CSVs included in the repository and require neith
 ```bash
 ./.venv_repro/bin/python -m analysis.analyze_results
 ./.venv_repro/bin/python -m analysis.make_tables
+./.venv_repro/bin/python -m analysis.make_report_latex
 ./.venv_repro/bin/python -m analysis.figures robustness
 ./.venv_repro/bin/python -m analysis.figures recraft
 ./.venv_repro/bin/python -m analysis.pca_features --figure-only
@@ -55,4 +56,4 @@ To evaluate the included Recraft images with locally trained models, run `./.ven
 
 ## Attribution
 
-ChatGPT assisted with project planning. OpenAI Codex assisted with implementation, debugging, refactoring, and reproducibility checks. Anthropic Claude reviewed the code and README. Recraft generated the 20 images used in the external evaluation. See [tool attribution](docs/ATTRIBUTION.md) for details.
+OpenAI Codex helped debug, improve the code and check reproducibility. Anthropic Claude conducted a final audit of the code, README and checked the outputs reproducible in its environment. Recraft generated the 20 images used in the external evaluation. See [tool attribution](docs/ATTRIBUTION.md) for details.

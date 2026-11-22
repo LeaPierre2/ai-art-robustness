@@ -40,34 +40,32 @@ def build_manifest() -> None:
 
     for style in sorted(styles):
         for source, label in labels.items():
-            train_pool = sorted(
-                groups["train", source, style], key=lambda row: row["path"]
-            )
-            test_pool = sorted(
-                groups["test", source, style], key=lambda row: row["path"]
-            )
+            train_pool = sorted(groups["train", source, style], key=lambda row: row["path"])
+            test_pool = sorted(groups["test", source, style], key=lambda row: row["path"])
 
             if len(train_pool) < train_pool_size or len(test_pool) < quotas["test"]:
                 raise ValueError(f"Insufficient images for {source} / {style}.")
 
             train_sample = rng.sample(train_pool, train_pool_size)
             selections = {
-                "train": train_sample[:quotas["train"]],
-                "validation": train_sample[quotas["train"]:],
+                "train": train_sample[: quotas["train"]],
+                "validation": train_sample[quotas["train"] :],
                 "test": rng.sample(test_pool, quotas["test"]),
             }
 
             for split, selected_rows in selections.items():
                 for row in selected_rows:
-                    manifest.append({
-                        "image_id": f"img_{len(manifest) + 1:06d}",
-                        "path": row["path"],
-                        "source": source,
-                        "style": style,
-                        "label": label,
-                        "original_split": row["original_split"],
-                        "split": split,
-                    })
+                    manifest.append(
+                        {
+                            "image_id": f"img_{len(manifest) + 1:06d}",
+                            "path": row["path"],
+                            "source": source,
+                            "style": style,
+                            "label": label,
+                            "original_split": row["original_split"],
+                            "split": split,
+                        }
+                    )
                     counts[split, source, style] += 1
 
     paths = {row["path"] for row in manifest}
@@ -84,8 +82,13 @@ def build_manifest() -> None:
         writer = csv.DictWriter(
             file,
             fieldnames=[
-                "image_id", "path", "source", "style",
-                "label", "original_split", "split",
+                "image_id",
+                "path",
+                "source",
+                "style",
+                "label",
+                "original_split",
+                "split",
             ],
         )
         writer.writeheader()
@@ -174,7 +177,10 @@ def _verify_manifest_rows(
             raise ValueError(f"Incorrect original split : {path}")
         if row["label"] != labels.get(row["source"]):
             raise ValueError(f"Incorrect label : {path}")
-        if original["readable"] != "True" or (original["width"], original["height"]) != ("256", "256"):
+        if original["readable"] != "True" or (original["width"], original["height"]) != (
+            "256",
+            "256",
+        ):
             raise ValueError(f"Unreadable image or unexpected dimensions : {path}")
 
         counts[row["split"], row["source"], row["style"]] += 1

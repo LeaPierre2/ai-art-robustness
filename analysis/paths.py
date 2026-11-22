@@ -19,9 +19,7 @@ def result_path(filename: Union[str, Path]) -> Path:
     return RESULTS_DIR / filename
 
 
-def open_result(
-    filename: Union[str, Path], mode: str = "r", **kwargs: Any
-) -> TextIO:
+def open_result(filename: Union[str, Path], mode: str = "r", **kwargs: Any) -> TextIO:
     """Create the parent directory only when writing a CSV."""
     path = result_path(filename)
     if any(flag in mode for flag in "wax+"):

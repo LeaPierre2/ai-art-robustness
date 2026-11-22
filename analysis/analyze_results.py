@@ -27,9 +27,7 @@ def analyze_scores() -> None:
     """AUC and paired score changes."""
     groups = defaultdict(dict)
 
-    with result_path("test_predictions.csv").open(
-        newline="", encoding="utf-8"
-    ) as file:
+    with result_path("test_predictions.csv").open(newline="", encoding="utf-8") as file:
         for row in csv.DictReader(file):
             key = (row["model"], row["condition"])
             image_id = row["image_id"]
@@ -63,12 +61,14 @@ def analyze_scores() -> None:
         if labels.count(0) != 600 or labels.count(1) != 600:
             raise ValueError(f"Expected 600 images per class : {model} / {condition}")
 
-        results.append({
-            "model": model,
-            "condition": condition,
-            "roc_auc": roc_auc_score(labels, scores),
-            "mean_human_ai_score_change": mean(human_changes),
-        })
+        results.append(
+            {
+                "model": model,
+                "condition": condition,
+                "roc_auc": roc_auc_score(labels, scores),
+                "mean_human_ai_score_change": mean(human_changes),
+            }
+        )
 
     output = result_path("test_score_analysis.csv")
     write_result_rows(output, results)
@@ -84,15 +84,11 @@ def analyze_scores() -> None:
 
 def analyze_flips() -> None:
     """Exact McNemar tests and Holm correction."""
-    with result_path("robustness_summary.csv").open(
-        newline="", encoding="utf-8"
-    ) as file:
+    with result_path("robustness_summary.csv").open(newline="", encoding="utf-8") as file:
         rows = list(csv.DictReader(file))
 
     reference_counts = {
-        row["model"]: int(row["false_positives"])
-        for row in rows
-        if row["condition"] == "reference"
+        row["model"]: int(row["false_positives"]) for row in rows if row["condition"] == "reference"
     }
     comparisons = [row for row in rows if row["condition"] != "reference"]
     keys = {(row["model"], row["condition"]) for row in comparisons}
@@ -118,15 +114,17 @@ def analyze_flips() -> None:
             if total_flips
             else 1.0
         )
-        results.append({
-            "model": model,
-            "condition": condition,
-            "new_false_positives": new,
-            "resolved_false_positives": resolved,
-            "total_flips": total_flips,
-            "delta_fpr_pp": 100 * (new - resolved) / 600,
-            "mcnemar_p": p_value,
-        })
+        results.append(
+            {
+                "model": model,
+                "condition": condition,
+                "new_false_positives": new,
+                "resolved_false_positives": resolved,
+                "total_flips": total_flips,
+                "delta_fpr_pp": 100 * (new - resolved) / 600,
+                "mcnemar_p": p_value,
+            }
+        )
 
     ranked = sorted(results, key=lambda row: row["mcnemar_p"])
     previous = 0.0
@@ -151,9 +149,7 @@ def analyze_flips() -> None:
 def analyze_ablation() -> None:
     """Paired contrast of FPR changes with bootstrap intervals."""
     predictions = defaultdict(dict)
-    with result_path("test_predictions.csv").open(
-        newline="", encoding="utf-8"
-    ) as file:
+    with result_path("test_predictions.csv").open(newline="", encoding="utf-8") as file:
         for row in csv.DictReader(file):
             if row["label"] != "0" or row["model"] not in (FULL_MODEL, ABLATED_MODEL):
                 continue
@@ -190,14 +186,16 @@ def analyze_ablation() -> None:
         sampled_differences = 100 * difference[indices].mean(axis=1)
         low, high = np.percentile(sampled_differences, [2.5, 97.5])
 
-        results.append({
-            "condition": condition,
-            "delta_fpr_full_pp": 100 * full_change.mean(),
-            "delta_fpr_without_frequency_pp": 100 * without_change.mean(),
-            "difference_without_minus_full_pp": 100 * difference.mean(),
-            "ci_low_pp": float(low),
-            "ci_high_pp": float(high),
-        })
+        results.append(
+            {
+                "condition": condition,
+                "delta_fpr_full_pp": 100 * full_change.mean(),
+                "delta_fpr_without_frequency_pp": 100 * without_change.mean(),
+                "difference_without_minus_full_pp": 100 * difference.mean(),
+                "ci_low_pp": float(low),
+                "ci_high_pp": float(high),
+            }
+        )
 
     output = result_path("frequency_ablation_comparison.csv")
     write_result_rows(output, results)

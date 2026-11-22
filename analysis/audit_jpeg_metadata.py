@@ -38,8 +38,7 @@ def audit_baselines() -> None:
         labels_by_profile[profile].append(int(row["label"]))
 
     profile_scores = {
-        profile: float(np.mean(labels))
-        for profile, labels in labels_by_profile.items()
+        profile: float(np.mean(labels)) for profile, labels in labels_by_profile.items()
     }
 
     # Choose on training data whether larger or smaller file size predicts AI.
@@ -112,9 +111,7 @@ def export_tables() -> None:
 def compare_tables() -> None:
     """Exact matches to Pillow quality settings 1 through 100."""
     observed = defaultdict(lambda: defaultdict(dict))
-    with result_path("jpeg_quantization_tables.csv").open(
-        newline="", encoding="utf-8"
-    ) as file:
+    with result_path("jpeg_quantization_tables.csv").open(newline="", encoding="utf-8") as file:
         for row in csv.DictReader(file):
             key = (row["source"], row["jpeg_profile"])
             table_id = int(row["table_id"])
@@ -142,7 +139,9 @@ def compare_tables() -> None:
             actual = {}
             for table_id, values in tables.items():
                 if set(values) != set(range(64)):
-                    raise ValueError(f"Incomplete table : {source}, profile {profile}, table {table_id}")
+                    raise ValueError(
+                        f"Incomplete table : {source}, profile {profile}, table {table_id}"
+                    )
                 actual[table_id] = [values[index] for index in range(64)]
 
             matches = [

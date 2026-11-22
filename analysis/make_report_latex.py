@@ -1,9 +1,14 @@
 """Generate two LaTeX tables from the saved complementary results."""
 
+from typing import Iterable, Mapping
+
 from .paths import document_path, read_result_rows
 
 
-def write_table(filename, caption, label, columns, header, rows):
+def write_table(
+    filename: str, caption: str, label: str, columns: str, header: str, rows: Iterable[str]
+) -> None:
+    """Write a LaTeX table to the documentation directory."""
     lines = [
         r"\begin{table}[tb]",
         r"\centering",
@@ -22,7 +27,8 @@ def write_table(filename, caption, label, columns, header, rows):
     document_path(filename).write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
-def main():
+def main() -> None:
+    """Generate the JPEG intervention and CNN augmentation tables."""
     models = {
         "logistic_full": "Logistic regression (full)",
         "logistic_no_frequency": "Logistic regression (no FFT)",
@@ -58,7 +64,8 @@ def main():
         for row in read_result_rows("cnn_augmentation_seed_summary.csv")
     }
 
-    def mean_range(row):
+    def mean_range(row: Mapping[str, str]) -> str:
+        """Format a signed mean and min–max range in percentage points."""
         average, low, high = (float(row[key]) for key in ("mean_pp", "min_pp", "max_pp"))
         return f"${average:+.2f}$ [${low:+.2f}$, ${high:+.2f}$]"
 

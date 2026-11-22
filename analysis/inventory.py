@@ -10,9 +10,16 @@ from .paths import DATASET_DIR, open_result, result_path
 
 
 VALID_STYLES = {
-    "art_nouveau", "baroque", "expressionism", "impressionism",
-    "post_impressionism", "realism", "renaissance", "romanticism",
-    "surrealism", "ukiyo_e",
+    "art_nouveau",
+    "baroque",
+    "expressionism",
+    "impressionism",
+    "post_impressionism",
+    "realism",
+    "renaissance",
+    "romanticism",
+    "surrealism",
+    "ukiyo_e",
 }
 
 
@@ -66,11 +73,22 @@ def build_inventory() -> None:
 
     with open_result(inventory_path, "w", newline="", encoding="utf-8") as csv_file:
         writer = csv.writer(csv_file)
-        writer.writerow([
-            "path", "original_split", "source", "style", "format",
-            "width", "height", "color_mode", "file_size_bytes",
-            "jpeg_profile", "readable", "error",
-        ])
+        writer.writerow(
+            [
+                "path",
+                "original_split",
+                "source",
+                "style",
+                "format",
+                "width",
+                "height",
+                "color_mode",
+                "file_size_bytes",
+                "jpeg_profile",
+                "readable",
+                "error",
+            ]
+        )
 
         for path, split, source, style in rows:
             full_path = DATASET_DIR / path
@@ -91,17 +109,40 @@ def build_inventory() -> None:
                         profile = jpeg_profiles.setdefault(tables, len(jpeg_profiles) + 1)
                         jpeg_counts[source, profile] += 1
 
-                    writer.writerow([
-                        path, split, source, style, image.format,
-                        image.width, image.height, image.mode, file_size,
-                        profile, True, "",
-                    ])
+                    writer.writerow(
+                        [
+                            path,
+                            split,
+                            source,
+                            style,
+                            image.format,
+                            image.width,
+                            image.height,
+                            image.mode,
+                            file_size,
+                            profile,
+                            True,
+                            "",
+                        ]
+                    )
             except OSError as error:
                 unreadable.append((path, error))
-                writer.writerow([
-                    path, split, source, style, "", "", "", "", file_size,
-                    "", False, str(error),
-                ])
+                writer.writerow(
+                    [
+                        path,
+                        split,
+                        source,
+                        style,
+                        "",
+                        "",
+                        "",
+                        "",
+                        file_size,
+                        "",
+                        False,
+                        str(error),
+                    ]
+                )
 
     print("Source | Format | Dimensions | Image count")
 
@@ -146,8 +187,9 @@ def summarize_inventory() -> None:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--summary-only", action="store_true",
-                        help="Display counts from the existing inventory.")
+    parser.add_argument(
+        "--summary-only", action="store_true", help="Display counts from the existing inventory."
+    )
     args = parser.parse_args()
     if not args.summary_only:
         build_inventory()

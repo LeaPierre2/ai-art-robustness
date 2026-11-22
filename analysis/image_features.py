@@ -22,9 +22,7 @@ def extract_features(image: Image.Image) -> dict[str, float]:
     features = {}
 
     for index, channel in enumerate(("red", "green", "blue")):
-        histogram, _ = np.histogram(
-            pixels[:, :, index], bins=16, range=(0, 256)
-        )
+        histogram, _ = np.histogram(pixels[:, :, index], bins=16, range=(0, 256))
         for bin_index, share in enumerate(histogram / histogram.sum()):
             features[f"color_{channel}_{bin_index:02d}"] = float(share)
 
@@ -48,9 +46,7 @@ def extract_features(image: Image.Image) -> dict[str, float]:
         "high": radius >= 0.25,
     }
     for name, mask in bands.items():
-        features[f"freq_{name}"] = (
-            float(energy[mask].sum() / total_energy) if total_energy else 0.0
-        )
+        features[f"freq_{name}"] = float(energy[mask].sum() / total_energy) if total_energy else 0.0
 
     return features
 
@@ -59,9 +55,7 @@ def preview() -> None:
     counts = Counter()
     examples = []
 
-    with result_path("dataset_manifest.csv").open(
-        newline="", encoding="utf-8"
-    ) as file:
+    with result_path("dataset_manifest.csv").open(newline="", encoding="utf-8") as file:
         for row in csv.DictReader(file):
             source = row["source"]
             if row["split"] != "train" or counts[source] >= 10:
@@ -73,12 +67,14 @@ def preview() -> None:
             if len(features) != 55 or not np.isfinite(list(features.values())).all():
                 raise ValueError(f"Invalid features for {row['image_id']}")
 
-            examples.append({
-                "image_id": row["image_id"],
-                "source": source,
-                "label": row["label"],
-                **features,
-            })
+            examples.append(
+                {
+                    "image_id": row["image_id"],
+                    "source": source,
+                    "label": row["label"],
+                    **features,
+                }
+            )
             counts[source] += 1
 
             if len(examples) == 20:
@@ -102,13 +98,8 @@ def build_table() -> None:
     expected_counts = {"train": 4200, "validation": 600}
     metadata_columns = ["image_id", "split", "source", "style", "label"]
 
-    with result_path("dataset_manifest.csv").open(
-        newline="", encoding="utf-8"
-    ) as file:
-        rows = [
-            row for row in csv.DictReader(file)
-            if row["split"] in expected_counts
-        ]
+    with result_path("dataset_manifest.csv").open(newline="", encoding="utf-8") as file:
+        rows = [row for row in csv.DictReader(file) if row["split"] in expected_counts]
 
     split_counts = Counter(row["split"] for row in rows)
     if split_counts != expected_counts:
@@ -125,9 +116,7 @@ def build_table() -> None:
                 raise ValueError(f"Invalid features for {row['image_id']}")
 
             if writer is None:
-                writer = csv.DictWriter(
-                    file, fieldnames=metadata_columns + list(features)
-                )
+                writer = csv.DictWriter(file, fieldnames=metadata_columns + list(features))
                 writer.writeheader()
 
             metadata = {column: row[column] for column in metadata_columns}
@@ -143,8 +132,12 @@ def build_table() -> None:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="55 visual features: preview or training/validation table.")
-    parser.add_argument("--table", action="store_true", help="Compute the 4,800 training/validation rows.")
+    parser = argparse.ArgumentParser(
+        description="55 visual features: preview or training/validation table."
+    )
+    parser.add_argument(
+        "--table", action="store_true", help="Compute the 4,800 training/validation rows."
+    )
     args = parser.parse_args()
     if args.table:
         build_table()

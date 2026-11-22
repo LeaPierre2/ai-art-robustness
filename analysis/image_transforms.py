@@ -75,11 +75,10 @@ def make_variants(image: Image.Image) -> dict[str, Image.Image]:
 
 def preview() -> None:
 
-    with result_path("dataset_manifest.csv").open(
-        newline="", encoding="utf-8"
-    ) as file:
+    with result_path("dataset_manifest.csv").open(newline="", encoding="utf-8") as file:
         row = next(
-            row for row in csv.DictReader(file)
+            row
+            for row in csv.DictReader(file)
             if row["split"] == "train" and row["source"] == "Human"
         )
 

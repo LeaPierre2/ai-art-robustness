@@ -39,7 +39,6 @@ def build_cnn() -> nn.Sequential:
     )
 
 
-
 def select_threshold(
     human_scores: Union[np.ndarray, Sequence[float]],
 ) -> float:
@@ -61,9 +60,7 @@ def select_threshold(
 
 def load_cnn(cnn_filename: str) -> tuple[nn.Module, torch.device, float]:
     """Load a CNN and its threshold without requiring logistic models."""
-    checkpoint = torch.load(
-        model_path(cnn_filename), map_location="cpu", weights_only=True
-    )
+    checkpoint = torch.load(model_path(cnn_filename), map_location="cpu", weights_only=True)
     device = torch.device("mps" if torch.backends.mps.is_available() else "cpu")
     cnn = build_cnn().to(device)
     cnn.load_state_dict(checkpoint["model_state"])
@@ -83,9 +80,7 @@ def load_detectors(cnn_filename: str = "cnn_model.pt"):
     }
     cnn, device, cnn_threshold = load_cnn(cnn_filename)
 
-    thresholds = {
-        name: saved["threshold"] for name, saved in logistic_models.items()
-    }
+    thresholds = {name: saved["threshold"] for name, saved in logistic_models.items()}
     thresholds["cnn"] = cnn_threshold
 
     return logistic_models, cnn, device, thresholds
@@ -107,10 +102,9 @@ def score_image_batch(
     features = [extract_features(image) for image in images] if logistic_models else []
     scores = {}
     for name, saved in logistic_models.items():
-        matrix = np.array([
-            [values[column] for column in saved["feature_names"]]
-            for values in features
-        ])
+        matrix = np.array(
+            [[values[column] for column in saved["feature_names"]] for values in features]
+        )
         scores[name] = saved["model"].predict_proba(matrix)[:, 1]
     tensors = torch.stack([image_to_tensor(image) for image in images])
     with torch.inference_mode():

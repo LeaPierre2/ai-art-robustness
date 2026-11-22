@@ -19,7 +19,10 @@ SIZE = "1024x1024"
 ENDPOINT = "https://external.api.recraft.ai/v1/images/generations"
 
 PROMPTS = (
-    ("art_nouveau", "Art Nouveau poster illustration of a woman holding lilies beneath an ornate floral arch"),
+    (
+        "art_nouveau",
+        "Art Nouveau poster illustration of a woman holding lilies beneath an ornate floral arch",
+    ),
     ("baroque", "Baroque oil painting of a still life with a silver bowl, grapes, and a candle"),
     ("expressionism", "Expressionist painting of a crowded city street at dusk"),
     ("impressionism", "Impressionist oil painting of people walking beside a river in spring"),
@@ -73,10 +76,7 @@ def main() -> None:
     jobs = []
 
     for index, (style, prompt) in enumerate(PROMPTS, start=1):
-        paths = [
-            RECRAFT_DIR / f"{index:02d}_{style}_{number:02d}.png"
-            for number in (1, 2)
-        ]
+        paths = [RECRAFT_DIR / f"{index:02d}_{style}_{number:02d}.png" for number in (1, 2)]
         existing = sum(path.exists() for path in paths)
         if existing == 1:
             raise SystemExit(f"Incomplete pair for {style}. Check the directory before retrying.")
@@ -98,10 +98,16 @@ def main() -> None:
     with log_path.open("a", newline="", encoding="utf-8") as log_file:
         writer = csv.writer(log_file)
         if needs_header:
-            writer.writerow([
-                "filename", "style", "prompt", "model",
-                "requested_size", "generated_at_utc",
-            ])
+            writer.writerow(
+                [
+                    "filename",
+                    "style",
+                    "prompt",
+                    "model",
+                    "requested_size",
+                    "generated_at_utc",
+                ]
+            )
 
         for style, prompt, paths in jobs:
             print(f"Generating: {style}", flush=True)
@@ -110,7 +116,9 @@ def main() -> None:
             except HTTPError as error:
                 raise SystemExit(f"Recraft HTTP error {error.code} for {style}.")
             except (URLError, TimeoutError):
-                raise SystemExit(f"Connection interrupted for {style}. Check your credit balance before retrying.")
+                raise SystemExit(
+                    f"Connection interrupted for {style}. Check your credit balance before retrying."
+                )
 
             generated_at = datetime.now(timezone.utc).isoformat()
             for path, content in zip(paths, images):

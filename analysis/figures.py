@@ -28,14 +28,9 @@ def plot_robustness() -> None:
     ]
 
     with result_path("robustness_summary.csv").open(newline="", encoding="utf-8") as file:
-        rows = {
-            (row["model"], row["condition"]): row
-            for row in csv.DictReader(file)
-        }
+        rows = {(row["model"], row["condition"]): row for row in csv.DictReader(file)}
 
-    fig, (ax_fpr, ax_detection) = plt.subplots(
-        1, 2, figsize=(11, 5.4), sharey=True
-    )
+    fig, (ax_fpr, ax_detection) = plt.subplots(1, 2, figsize=(11, 5.4), sharey=True)
     positions = list(range(len(conditions)))
     ax_fpr.axvline(0, color="#555555", linestyle="--", linewidth=1)
 

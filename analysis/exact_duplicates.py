@@ -81,9 +81,7 @@ def exclude_duplicates() -> None:
     """Prefer the test copy, then the minimum path, without deleting images."""
     groups = defaultdict(list)
 
-    with result_path("exact_duplicates.csv").open(
-        newline="", encoding="utf-8"
-    ) as csv_file:
+    with result_path("exact_duplicates.csv").open(newline="", encoding="utf-8") as csv_file:
         for row in csv.DictReader(csv_file):
             groups[row["group_id"]].append(row)
 
@@ -130,8 +128,13 @@ def exclude_duplicates() -> None:
         writer = csv.DictWriter(
             csv_file,
             fieldnames=[
-                "group_id", "path", "original_split", "source", "style",
-                "kept_path", "reason",
+                "group_id",
+                "path",
+                "original_split",
+                "source",
+                "style",
+                "kept_path",
+                "reason",
             ],
         )
         writer.writeheader()

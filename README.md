@@ -56,4 +56,4 @@ To evaluate the included Recraft images with locally trained models, run `./.ven
 
 ## Attribution
 
-OpenAI Codex helped debug, improve the code and check reproducibility. Anthropic Claude conducted a final audit of the code, README and checked the outputs reproducible in its environment. Recraft generated the 20 images used in the external evaluation. See [tool attribution](docs/ATTRIBUTION.md) for details.
+OpenAI Codex helped debug, improve the code and check reproducibility. Anthropic Claude conducted a final audit of the code, README and checked the outputs reproducible in its environment. Recraft generated the 20 images used in the external evaluation.

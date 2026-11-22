@@ -89,9 +89,8 @@ re-evaluation requires the retained historical weights. CPU/MPS differences alre
 observed are quantified in the README and `E2E_VALIDATION.md`.
 
 MPS replay, unseen course-workspace rules, archive version/checksum and the
-archive-specific license remain unverified. [Attribution](ATTRIBUTION.md) separates
-visible execution evidence from author-provided tool provenance and lists report
-appendix items. The current review does not retrospectively authenticate an
+archive-specific license remain unverified. The current review does not
+retrospectively authenticate an
 uninspected external Claude audit or unavailable planning transcript.
 ## Executed clean-copy results
 

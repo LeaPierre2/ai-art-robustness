@@ -33,9 +33,49 @@ These ranges are min–max, not confidence intervals. Seeds represent training v
 - 64 px, `attenuation_loss_pp`: signs in 42/43/44 order = positive/positive/positive. Sign changes: no.
 - 64 px, `difference_fpr_pp`: signs in 42/43/44 order = negative/negative/negative. Sign changes: no.
 
-## Actual executions and timing
+## CPU reproduction for seeds 42, 43 and 44
 
-`PY` is the absolute path to `.venv_repro/bin/python`. Shared variables: `OMP_NUM_THREADS=4 PYTHONHASHSEED=0 MPLBACKEND=Agg`; Matplotlib/Python caches are in the test directory. MPS is unavailable here, so training and evaluation use CPU. Control and augmented models train concurrently per pair; seeds run successively. Times below use `time.perf_counter`, including process startup.
+The standard training and evaluation commands automatically select MPS when PyTorch reports it available. The delivered augmentation results were produced on CPU. The wrapper below temporarily makes PyTorch report MPS as unavailable, so training and evaluation select CPU even on an MPS-capable Mac. The override is scoped to each Python process and requires no changes to Python source files.
+
+To preserve the delivered files, use a separate copy of the repository with the same dataset and manifest. Set up `.venv_repro` in that copy using the README instructions, then run the block from the copy's repository root. The block trains the control and augmented models in sequence for each seed, evaluates each pair, then rebuilds the cross-seed summaries.
+
+```bash
+(
+  export OMP_NUM_THREADS=4
+  export OPENBLAS_NUM_THREADS=4
+  export PYTHONHASHSEED=0
+  export MPLBACKEND=Agg
+
+  run_cpu() {
+    ./.venv_repro/bin/python -u -c '
+import runpy
+import sys
+import torch
+
+torch.backends.mps.is_available = lambda: False
+module = sys.argv[1]
+sys.argv = [module] + sys.argv[2:]
+runpy.run_module(module, run_name="__main__")
+' "$@"
+  }
+
+  for seed in 42 43 44; do
+    run_cpu analysis.train_cnn --seed "$seed" \
+      --output-model "cnn_augmentation_control_seed_${seed}.pt" &&
+    run_cpu analysis.train_cnn --seed "$seed" --augment \
+      --output-model "cnn_augmentation_augmented_seed_${seed}.pt" &&
+    run_cpu analysis.cnn_augmentation --seed "$seed" || exit 1
+  done
+
+  run_cpu analysis.cnn_augmentation --summarize-seeds
+)
+```
+
+The six experiment checkpoints are written to `models/cnn_augmentation_{control,augmented}_seed_{42,43,44}.pt`. The explicit output names leave `models/cnn_model.pt` intact. Evaluation regenerates the per-seed predictions, summary and comparison CSVs and the final command regenerates both cross-seed CSVs in `results/`. Evaluation also rewrites the per-seed JSON metadata in `docs/`.
+
+## Historical CPU executions and timing for seeds 43 and 44
+
+In these earlier runs, `PY` was the absolute path to `.venv_repro/bin/python`. The runs set `OMP_NUM_THREADS=4`, `PYTHONHASHSEED=0` and `MPLBACKEND=Agg` and placed Matplotlib and Python caches in the test directory. MPS was unavailable in that environment, so training and evaluation used CPU. Control and augmented models trained concurrently within each seed, and seeds ran successively. Timings use `time.perf_counter` and include process startup.
 
 The control commands below ran in isolated copies `local/cnn-augmentation-seeds43-44-2026-11-15/seed-{43,44}/`, never at the root: default filenames therefore overwrite no historical model. Before evaluation, each control is copied to `cnn_augmentation_control_seed_<graine>.pt`. Here the historical placeholder `<graine>` means the seed.
 
@@ -48,14 +88,12 @@ $PY -m analysis.train_cnn --seed 44 --augment --output-model cnn_augmentation_au
 $PY -m analysis.cnn_augmentation --seed 44
 ```
 
-To reproduce directly in the repository without touching historical names, add `--output-model cnn_augmentation_control_seed_43.pt` to control 43 (respectively 44). The other two commands are unchanged.
-
 | Seed | Control (s) | Augmented (s) | Evaluation of both (s) |
 |---|---:|---:|---:|
 | 43 | 343.96 | 343.96 | 54.51 |
 | 44 | 344.40 | 344.40 | 54.63 |
 
-## Checks and files
+## Historical checks and exported files
 
 - SHA-256 hashes of all preexisting files in `models/`, `results/`, `figures/`, `docs/`, `analysis/`, README and `run_all.py` match before export. Historical MPS artifacts and every seed-42 artifact remain unchanged.
 - Manifest identical in both copies and repository: `e04565ff1a9b44a817501680db0dafb316d58e122429bac526b414e5b205a606`.
